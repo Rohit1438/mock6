@@ -17,7 +17,8 @@ const getAllUsers = async (req, res, next) => {
 
 const userSignUp = async (req, res, next) => {
   try {
-    const { name, email, password } = req.body;
+    console.log("trying to post");
+    const { name, email, password ,phone} = req.body;
 
     const hashedPassword = await hash(password, 14);
     const existingUser = await User.findOne({ email });
@@ -26,7 +27,7 @@ const userSignUp = async (req, res, next) => {
       // Send a response when the user already exists
       return res.status(401).send("User already registered");
     }
-    const user = new User({ name, email, password: hashedPassword });
+    const user = new User({ name, email,phone, password: hashedPassword });
     await user.save();
 
     // Create a token and store a cookie
